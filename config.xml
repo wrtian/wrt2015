@@ -5,7 +5,7 @@
 		xmlns:gap       = "http://phonegap.com/ns/1.0"
 		xmlns:android   = "http://schemas.android.com/apk/res/android"
 		id              = "com.worldrummytournament.app"
-		version         = "20150128a">
+		version         = "1.0.0">
 		
 	<name>WRT 2015</name>
 	
@@ -23,6 +23,7 @@
    <gap:plugin name="org.apache.cordova.network-information" />
 
    <!-- Preference -->
+   <preference name="phonegap-version" value="3.6.3" />
    <preference name="orienation" value="portrait" />
    <preference name="fullscreen" value="true" />
    <preference name="WebViewBounce" value="false" />
