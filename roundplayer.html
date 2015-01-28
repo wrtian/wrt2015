@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>WRT 2015</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/ratchet.min.css">
+		<link rel="stylesheet" href="css/app.css">
+		<link rel="stylesheet" href="css/jquery.dataTables.css">
+		<script src="js/ratchet.min.js"></script>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/jquery.cookie.js"></script>
+		<script src="js/jquery.storageapi.min.js"></script>
+		<script src="js/jquery.serialize-object.min.js"></script>
+		<script src="js/tmpl.min.js"></script>
+		<script src="js/notify.min.js"></script>
+		<script src="js/notify.bootstrap.js"></script>
+		<script src="js/html5-qrcode.min.js"></script>
+		<script src="js/html5-qrcode.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery.dataTables.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+			   // $('#myTable').DataTable();
+
+			    $('table').dataTable( {
+				  paginate: false,
+				  //scrollY: 300
+				  filter: false,
+				  info:false
+				} );
+			})
+		</script>
+	</head>
+	<body id="round">
+		<header class="bar bar-nav">
+		  <a  href="home.html" class="icon icon-home pull-left" data-ignore="push"></a>
+		    <h1 class="title">
+		      Player in Round 1
+		    </h1>
+		  </a>
+		</header>
+		<div class="content content-padded">
+		<div class="card">
+		<table id="myTable" class="display" cellspacing="0" width="100%">
+			    <thead>
+			        <tr>
+			            <th>Rank</th>
+			            <th>Player Name</th>
+			            <th>Card</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			        <tr>
+			            <td>Rank 1</td>
+			            <td>Player 1</td>
+			            <td>Card No.</td>
+			        </tr>
+			        <tr>
+			            <td>Rank 2</td>
+			            <td>Player 1</td>
+			            <td>Card No.</td>
+			        </tr>
+			        <tr>
+			            <td>Rank 3</td>
+			            <td>Player 1</td>
+			            <td>Card No.</td>
+			        </tr>
+			        <tr>
+			            <td>Rank 4</td>
+			            <td>Player 1</td>
+			            <td>Card No.</td>
+			        </tr>
+			        <tr>
+			            <td>Rank 5</td>
+			            <td>Player 1</td>
+			            <td>Card No.</td>
+			        </tr>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+	</body>
+</html>

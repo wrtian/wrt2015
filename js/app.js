@@ -14,14 +14,15 @@ function ConfigApi(u)
 		,'URL_PULSE' :	u +'/'
 		,'URL_AUTHENTICATE' : u +'/authenticate'
 		,'URL_PLAYERINFO' : u +'/playerinfo'
+		,'URL_PLAYERFIND' : u +'/playersearch'
 		,'URL_PLAYERUPDATE' : u +'/playerinfo'
-		
+		,'URL_ROUNDS' : u +'/Rounds'
 		,'URL_GETCURRENCIES' : u +'/getcurrencies'
 		,'URL_LOGOUT' :	u +'/logout'
 	};
 };
 
-//ConfigApi('http://localhost:8080/a/wrt2015/api');
+ConfigApi('http://192.168.1.100/wrt2015/api');
 
 $.ajaxSetup({
 	beforeSend: addHeaders

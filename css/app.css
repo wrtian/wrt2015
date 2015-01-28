@@ -24,3 +24,35 @@ background-color: #fff;
 border: 1px solid #ddd;
 border-radius: 6px 0 0 6px;
 }
+
+tr{
+  text-align: center !important;
+}
+
+
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+ol.example li.placeholder {
+  position: relative;
+  /** More li styles **/
+}
+ol.example li.placeholder:before {
+  position: absolute;
+  /** Define arrowhead **/
+}
+
+.center{
+  text-align: center;
+}
+
+#deal header img, #playerposition header img{
+  padding-top: 10px;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>WRT 2015</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/ratchet.min.css">
+		<link rel="stylesheet" href="css/app.css">
+		<script src="js/ratchet.min.js"></script>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/jquery.cookie.js"></script>
+		<script src="js/jquery.storageapi.min.js"></script>
+		<script src="js/jquery.serialize-object.min.js"></script>
+		<script src="js/tmpl.min.js"></script>
+		<script src="js/notify.min.js"></script>
+		<script src="js/notify.bootstrap.js"></script>
+		<script src="js/html5-qrcode.min.js"></script>
+		<script src="js/html5-qrcode.js"></script>
+		<script src="js/app.js"></script>
+	</head>
+	<body id="playerposition">
+		<header class="bar bar-nav">
+		  <a  href="home.html" class="pull-left"  data-ignore="push"><img src="img/left224.png" /></a>
+		    <h1 class="title">
+		      Sitting Position
+		    </h1>
+		  </a>
+		</header>
+		<div class="content content-padded">
+			<p>Drag the player name to re-arrange</p>
+			<div class="card">
+
+				<ol class='example table-view'>
+				  <li class="table-view-cell media">
+				    <a>
+				      <img class="media-object pull-left" src="http://placehold.it/42x42">
+				      <div class="media-body">
+				        Player Name 1
+				        <p>Card No.</p>
+				      </div>
+				    </a>
+				  </li>
+				  <li class="table-view-cell media">
+				    <a>
+				      <img class="media-object pull-left" src="http://placehold.it/42x42">
+				      <div class="media-body">
+				        Player Name 2
+				        <p>Card No.</p>
+				      </div>
+				    </a>
+				  </li>
+				  <li class="table-view-cell media">
+				    <a>
+				      <img class="media-object pull-left" src="http://placehold.it/42x42">
+				      <div class="media-body">
+				        Player Name 3
+				        <p>Card No.</p>
+				      </div>
+				    </a>
+				  </li>
+				  <li class="table-view-cell media">
+				    <a>
+				      <img class="media-object pull-left" src="http://placehold.it/42x42">
+				      <div class="media-body">
+				        Player Name 4
+				        <p>Card No.</p>
+				      </div>
+				    </a>
+				  </li>
+				  <li class="table-view-cell media">
+				    <a>
+				      <img class="media-object pull-left" src="http://placehold.it/42x42">
+				      <div class="media-body">
+				        Player Name 5
+				        <p>Card No.</p>
+				      </div>
+				    </a>
+				  </li>
+				  <li class="table-view-cell media">
+				    <a>
+				      <img class="media-object pull-left" src="http://placehold.it/42x42">
+				      <div class="media-body">
+				        Player Name 6
+				        <p>Card No.</p>
+				      </div>
+				    </a>
+				  </li>
+				</ol>
+			</div>
+			<button class="btn btn-primary btn-block">START</button>
+		</div>
+		<!-- /.content -->
+		<script src='js/jquery-sortable.js'></script>
+		<script type="text/javascript">
+			$(function  () {
+			  $("ol.example").sortable()
+			})
+		</script>
+	</body>
+</html>

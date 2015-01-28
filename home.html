@@ -22,102 +22,48 @@
 		<script src="js/app.js"></script>
 	</head>
 	<body id="home">
-		<script type="text/x-tmpl" id="tmpl-playerinfo">
-			<img class="media-object pull-left" style="width:25%" src="{% if (o.details.pic_url) %}{%=o.details.pic_url%}" />
-			<br/>
-			<div class="media-body">
-				<button id="playeredit" type="button" class="btn btn-primary pull-right">EDIT DETAILS</button>
-				<h3>{%=o.basic.full_name%}</h3>
-				<p>{%=o.details.address%}<br/>
-				{%=o.details.city%}<br/>
-				{%=o.details.state%}, {%=o.details.pincode%}<br/>
-				{%=o.details.mobile%}<br/>
-				{%=o.details.landline%}<br/>
-				{%=o.details.pancard%}<br/>
-				{%=o.details.passport%}<br/>
-				{%=o.details.hotel_card%}<br/>
-				{%=o.details.room_no%}</p>
-			</div>
-		</script>
-
-		<header class="bar bar-nav col-xs-12">
-			<a id="logout" class="icon icon-share icon-rotate-90 pull-right"></a>
-			<h1 class="title">Player Information</h1>
+		<header class="bar bar-nav col-md-12">
+			<!-- <a id="logout" class="icon icon-share icon-rotate-90 pull-left"></a> -->
+			<h1 class="title">Dashboard</h1>
 		</header>
-		<div class="bar bar-standard bar-header-secondary table-view">
-				<div class="table-view-cell">
-					<input type='text' id='playercode' style="height: 25px;width: 80%;top: 30%;" placeholder='Type a card number'/>
-					<button id="launchscan" type="button" class="btn btn-primary pull-right" style="top:35%">DETAILS</button>
-				</div>
-			<!--
-				<div class='boxinfo col-xs-6' id='playercode'><em>scan a card first</em></div>
-				<button id="launchscan" type="button" class="submit btn btn-primary">SCAN CARD</button>
-			</div-->
-		</div>
+
 		<div class="content content-padded">
-			<div class="table-view">
-				<div class="table-view-cell media" id="playerinfo">
-				</div>
+			<div class="card">
+				<ul class="table-view">
+				  <li class="table-view-cell media">
+					<a class="navigate-right" href="getplayercode.html" data-ignore="push">
+					  <span class="media-object pull-left icon icon-person"></span>
+					  <div class="media-body">PLAYER</div>
+					</a>
+				  </li>
+				  <li class="table-view-cell media">
+					<a class="navigate-right" href="leaderboards.html" data-ignore="push">
+					  <span class="media-object pull-left icon icon-list"></span>
+					  <div class="media-body">LEADERBOARD</div>
+					</a>
+				  </li>
+				  <li class="table-view-cell media">
+					<a class="navigate-right" href="scores.html" data-ignore="push">
+					  <span class="media-object pull-left icon icon-star-filled"></span>
+					  <div class="media-body">SCORES</div>
+					</a>
+				  </li>
+				  <li class="table-view-cell media">
+					<a class="navigate-right" href="scores.html" data-ignore="push">
+					  <span class="media-object pull-left icon icon-gear"></span>
+					  <div class="media-body">SETTINGS</div>
+					</a>
+				  </li>
+				  <li class="table-view-cell media">
+					<a class="navigate-right" href="scores.html" data-ignore="push">
+					  <span class="media-object pull-left icon icon-share icon-rotate-90"></span>
+					  <div class="media-body">LOGOUT</div>
+					</a>
+				  </li>
+				</ul>  
 			</div>
-			
 		</div>
 		<!-- /.content -->
-		<div id="scancard" class="modal">
-			<header class="bar bar-nav">
-				<a class="icon icon-close pull-right" id="closescancard" href="#scancard"></a>
-				<h1 class="title">SCAN CARD</h1>
-			</header>
-
-			<div class="content">
-				<div id="reader" style="width:300px;height:250px;"></div>
-				<div class='input-row'><label>OR Type in code: </label><input id="code" name="url" type="text" placeholder="Type in the code" required></div>
-			</div>
-		</div>
-		<div id="editplayer" class="modal">
-			<header class="bar bar-nav">
-				<a class="icon icon-close pull-right" id="closescancard" href="#editplayer"></a>
-				<h1 class="title">Edit Player Information</h1>
-			</header>
-			<div class="content content-padded">
-				<ul class="table-view">
-					<li class="table-view-cell">
-					Activate Player
-						<div class="toggle" id="activate">
-							<div class="toggle-handle"></div>
-						</div>
-					</li>
-					<li class="table-view-cell">
-						<input type="text" name="hotel_card" id="hotel_card" placeholder="Hotel Card No"/>
-					</li>
-					<li class="table-view-cell">
-						<input type="text" name="room_no" id="room_no" placeholder="Hotel Room No"/>
-					</li>
-				</ul>
-				<button type="submit" id="saverecord" class="btn btn-block btn-primary">SAVE</button>
-			</div>
-		</div>		
-		<nav class="bar bar-tab">
-			<a class="tab-item active" data-ignore="push" href="home.html">
-				<span class="icon icon-person"></span>
-				<span class="tab-label">Player</span>
-			</a>
-			<a class="tab-item" data-ignore="push" href="payments.html">
-				<span class="icon icon-person"></span>
-				<span class="tab-label">Payment</span>
-			</a>
-			<a class="tab-item" data-ignore="push" href="results.html">
-				<span class="icon icon-star-filled"></span>
-				<span class="tab-label">Results</span>
-			</a>
-			<a class="tab-item" data-ignore="push" href="players.html">
-				<span class="icon icon-search"></span>
-				<span class="tab-label">Players</span>
-			</a>
-			<a class="tab-item" data-ignore="push" href="settings.html">
-				<span class="icon icon-gear"></span>
-				<span class="tab-label">Settings</span>
-			</a>
-		</nav>
 
 	</body>
 	<script>
