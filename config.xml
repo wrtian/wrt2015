@@ -18,8 +18,8 @@
 	<access origin="*" />
 
 	<!-- Define app icon for each platform. -->
-   <icon src="img/wrt.jpg" />
-   <gap:splash src="img/wrt.jpg" />
+   <icon src="logo.png" />
+   <gap:splash src="logo.png" />
    <gap:plugin name="org.apache.cordova.network-information" />
 
    <!-- Preference -->
