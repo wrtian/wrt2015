@@ -22,8 +22,6 @@ function ConfigApi(u)
 	};
 };
 
-ConfigApi('http://192.168.1.100/wrt2015/api');
-
 $.ajaxSetup({
 	beforeSend: addHeaders
 });
