@@ -47,7 +47,6 @@ $(function() {
 	{
 		$.get( ConfigApi().URL_PULSE).done(
 			function(r) {
-				alert(JSON.stringify(r));
 				if(r.status != 200)
 					location.href = 'index.html';
 			}
