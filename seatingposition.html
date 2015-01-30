@@ -20,6 +20,17 @@
 		<script src="js/html5-qrcode.min.js"></script>
 		<script src="js/html5-qrcode.js"></script>
 		<script src="js/app.js"></script>
+		<script type="text/x-tmpl" id="tmpl-playerinfo">
+			<li class="table-view-cell media">
+				<a>
+					<img class="media-object pull-left" src="{%=o.pic_url%}">
+					<div class="media-body">
+						{%=o.full_name%}
+						<p>{%=o.card_no%}</p>
+					</div>
+				</a>
+			</li>		
+		</script>
 	</head>
 	<body id="playerposition">
 		<header class="bar bar-nav">
@@ -32,71 +43,17 @@
 		<div class="content content-padded">
 			<p>Drag the player name to re-arrange</p>
 			<div class="card">
-
-				<ol class='example table-view'>
-				  <li class="table-view-cell media">
-				    <a>
-				      <img class="media-object pull-left" src="http://placehold.it/42x42">
-				      <div class="media-body">
-				        Player Name 1
-				        <p>Card No.</p>
-				      </div>
-				    </a>
-				  </li>
-				  <li class="table-view-cell media">
-				    <a>
-				      <img class="media-object pull-left" src="http://placehold.it/42x42">
-				      <div class="media-body">
-				        Player Name 2
-				        <p>Card No.</p>
-				      </div>
-				    </a>
-				  </li>
-				  <li class="table-view-cell media">
-				    <a>
-				      <img class="media-object pull-left" src="http://placehold.it/42x42">
-				      <div class="media-body">
-				        Player Name 3
-				        <p>Card No.</p>
-				      </div>
-				    </a>
-				  </li>
-				  <li class="table-view-cell media">
-				    <a>
-				      <img class="media-object pull-left" src="http://placehold.it/42x42">
-				      <div class="media-body">
-				        Player Name 4
-				        <p>Card No.</p>
-				      </div>
-				    </a>
-				  </li>
-				  <li class="table-view-cell media">
-				    <a>
-				      <img class="media-object pull-left" src="http://placehold.it/42x42">
-				      <div class="media-body">
-				        Player Name 5
-				        <p>Card No.</p>
-				      </div>
-				    </a>
-				  </li>
-				  <li class="table-view-cell media">
-				    <a>
-				      <img class="media-object pull-left" src="http://placehold.it/42x42">
-				      <div class="media-body">
-				        Player Name 6
-				        <p>Card No.</p>
-				      </div>
-				    </a>
-				  </li>
+				<ol class='seating table-view'>
 				</ol>
 			</div>
-			<button class="btn btn-primary btn-block">START</button>
+			<button class="btn btn-primary btn-block" id="start">START</button>
 		</div>
 		<!-- /.content -->
 		<script src='js/jquery-sortable.js'></script>
 		<script type="text/javascript">
 			$(function  () {
-			  $("ol.example").sortable()
+			  $("ol.seating").sortable();
+			  
 			})
 		</script>
 	</body>
