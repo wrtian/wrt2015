@@ -97,7 +97,7 @@
 					//,"auth_token": API_DIGEST
 				};
 
-				
+alert(ConfigApi().URL_AUTHENTICATE);
 				$.post( ConfigApi().URL_AUTHENTICATE , d )
 				.done(function(r) {
 					alert(JSON.stringify(r));
