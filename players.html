@@ -13,7 +13,7 @@
 		<script src="js/jquery-1.11.1.min.js"></script>
 		<script src="js/jquery.cookie.js"></script>
 		<script src="js/jquery.storageapi.min.js"></script>
-		<script src="js/jquery.serialize-object.min.js"></script>
+		<script src="js/jquery.serializeObject.min.js"></script>
 		<script src="js/tmpl.min.js"></script>
 		<script src="js/notify.min.js"></script>
 		<script src="js/notify.bootstrap.js"></script>
@@ -25,7 +25,7 @@
 				<li class="table-view-cell media">
 					<img class="media-object pull-left" style="width:15%" src="{% if (o.details.pic_url) %}{%=o.details.pic_url%}" />
 					<div class="media-body">
-						<button id="playeredit" type="button" class="btn btn-primary pull-right">EDIT DETAILS</button>
+						<!--button id="playeredit" type="button" class="btn btn-primary pull-right">EDIT DETAILS</button-->
 						{%=o.basic.full_name%}
 						<p>{%=o.details.address%}<br/>
 						{%=o.details.city%}<br/>
@@ -38,21 +38,50 @@
 						{%=o.details.room_no%}</p>
 					</div>
 				</li>
+				<li style='text-align:center'> {% if (o.basic.active==1) { %}
+					<span class="badge badge-positive">PLAYER REGISTERED</span>
+					{% } else { %}
+					<button id="playerregister" type="button" class="btn btn-positive btn-block">REGISTER</button>
+					{% } %}
+				</li>
 			</ul>
 		</script>
+		<script type="text/x-tmpl" id="tmpl-playeredit">
+			<ul class="table-view">
+				<li class="table-view-cell media">
+					<img id='profile_pic' class="media-object pull-left" style="width:15%" src="{% if (o.details.pic_url) %}{%=o.details.pic_url%}" />
+					<input type='file' id='change_img' />
+					<div class="media-body">
+						<form>
+							<input type='hidden' name='id' value='{%=o.basic.id%}'/>
+							<input type='hidden' name='pic_data' id='pic_data'/>
+							<input type='text' name='full_name' placeholder='full name' value='{%=o.basic.full_name%}'/>
+							<textarea 		   name='address' placeholder='address'>{%=o.details.address%}</textarea>
+							<!--input type='text' name='city' placeholder='city' value='{%=o.details.city%}' /-->
+							<input type='text' name='state' placeholder='state' value='{%=o.details.state%}'/> 
+							<input type='text' name='pincode' placeholder='pincode' value='{%=o.details.pincode%}'/>
+							<input type='text' name='mobile' placeholder='mobile' value='{%=o.details.mobile%}'/>
+							<input type='text' name='landline' placeholder='landline' value='{%=o.details.landline%}' />
+							<input type='text' name='pancard' placeholder='pancard' value='{%=o.details.pancard%}'/>
+							<input type='text' name='passport' placeholder='passport' value='{%=o.details.passport%}'/>
+							<input type='text' name='hotel_card' placeholder='cruise card no' value='{%=o.details.hotel_card%}'/>
+							<input type='text' name='room_no' placeholder='room no' value='{%=o.details.room_no%}' />
+						
+							<button type="submit" class="btn btn-positive btn-block">REGISTER</button>
+						</form>
+					</div>
+				</li>
+			</ul>
+		</script>		
 		<script type="text/x-tmpl" id="tmpl-transaction">
 			<ul class="table-view">
 				<li class="table-view-cell media">
 					<div class="media-body">
-						{%=o.basic.full_name%}
-						<p>{%=o.transactions.player_id%}<br/>
-						{%=o.transactions.currency_value%}<br/>
-						{%=o.transactions.transaction_value%}<br/>
-						{%=o.transactions.debit_credit%}<br/>
-						{%=o.transactions.narration%}<br/>
-						{%=o.transactions.submitted_value%}<br/>
-						{%=o.transactions.manager_id%}<br/>
+						{%=o.transactions.narration%}
+						<p class='pull-right'>{%=o.transactions.transaction_value%}<br/>
+							{%=o.transactions.created_at%}
 						</p>
+
 					</div>
 				</li>
 			</ul>
@@ -107,9 +136,18 @@
 			  </div>
 			</div>
 		</div>
+	    <div id="editplayer" class="modal">
+			<header class="bar bar-nav">
+				<a class="icon icon-close pull-right" href="#editplayer"></a>
+				<h1 class="title">Edit Information</h1>
+			</header>
+			<div class="content content-padded">
+			</div>
+		</div>
+		
 	    <div id="new_transaction" class="modal">
 		  <header class="bar bar-nav">
-		    <a class="icon icon-close pull-right" href="#transaction"></a>
+		    <a class="icon icon-close pull-right" href="#new_transaction"></a>
 		    <h1 class="title">Make a Transaction</h1>
 		  </header>
 		  <div class="content content-padded">
@@ -133,29 +171,71 @@
 		<!-- /.content -->
 	</body>
 	<script>
+		var id = '';
 		$(function() {
 			id = $(location).attr('hash').substr(1);
 			if(id =='') {
 				$.notify("Enter player code", "error");
 				return;
 			}
+			
+			load_player(id);
+	    });
+		
+		function save_player()
+		{
+			var ob = $( 'form' ).serializeObject();
+
+			$.post( ConfigApi().URL_PLAYERUPDATE , {player: ob } )
+			.done(function(r) {
+				alert(JSON.stringify(r));
+				$("#editplayer").removeClass('active');
+				load_player();
+			});
+			return false;
+		}
+		function load_player()
+		{
 			$.post( ConfigApi().URL_PLAYERINFO , {id: id} )
 			.done(function(r) {
 				if(r.status == 200) {
 					$("#playerinfo").html(tmpl('tmpl-playerinfo', r.data));
+					$("#editplayer div.content").html(tmpl('tmpl-playeredit', r.data));
+					
 					$("#game").html(tmpl('tmpl-game', r.data));
 					$("#transaction").html(tmpl('tmpl-transaction', r.data));
+					
+					$("form").submit(save_player);
+					$("#playerregister").on("touchstart", function() {
+						$("#editplayer").addClass('active');	
+					});
+					$("#change_img").change(function(){
+						readImage( this );
+					});
 				} else if(r.status == 500) {
 					$("#playerinfo").html('server error');
 					$("#game").html('server error');
-					$("#transaction").html(tmpl('tmpl-transaction', r.data));
+					$("#transaction").html('no transactions');
 				} else {
 					$("#playerinfo").html('player information not found');
 					$("#game").html('player information not found');
-					$("#transaction").html(tmpl('tmpl-transaction', r.data));
+					$("#transaction").html('no transactions');
 				}
-			});
-	    });
+			});		
+		}
+		function readImage(input) {
+			if ( input.files && input.files[0] ) {
+				var FR= new FileReader();
+				FR.onload = function(e) {
+					$('#profile_pic').attr( "src", e.target.result );
+					$('#pic_data').val( e.target.result );
+				};       
+				FR.readAsDataURL( input.files[0] );
+			}
+		}
+
+
+
 	</script>
 	
 </html>

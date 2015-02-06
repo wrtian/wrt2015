@@ -20,30 +20,37 @@
 		<script src="js/html5-qrcode.min.js"></script>
 		<script src="js/html5-qrcode.js"></script>
 		<script src="js/app.js"></script>
+		<script type="text/x-tmpl" id="tmpl-roundtables">
+			{% for (var i=0; i<o.rounds.length; i++) { %}
+			<li class="table-view-divider">{%=o.rounds[i].name%}</li>
+			{% for (var j=0; j<o.rounds[i].tables.length; j++) { %}
+			<li class="table-view-cell"><a class="navigate-right" data-ignore="push" href="roundtabledetail.html#{%=o.rounds[i].tables[j].id %}">{%=o.rounds[i].tables[j].name %}</a></li>
+			{% } %}
+			{% } %}
+		</script>
 	</head>
 	<body id="score">
 		<header class="bar bar-nav col-xs-12">
 			<a  href="home.html" class="icon icon-home pull-left" data-ignore="push"></a>
-			<h1 class="title">SCORE</h1>
+			<h1 class="title">SELECT TABLE</h1>
 		</header>
 		<div class="content content-padded">
 			<div class="card">
-				<ul class="table-view">
-				  <li class="table-view-divider">Round 1</li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 1</a></li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 3</a></li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 4</a></li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 5</a></li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 6</a></li>
-				  <li class="table-view-divider">Round 2</li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 7</a></li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 8</a></li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 9</a></li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 10</a></li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 11</a></li>
-				  <li class="table-view-cell"><a class="navigate-right" href="roundtabledetail.html">Table 12</a></li>
+				<ul id="select-table" class="table-view">
 				</ul>
 			</div>
 	    </div>
-	</body>	
+	</body>
+	<script>
+		$(function() {
+			$.post( ConfigApi().URL_ROUNDS)
+			.done(function(r) {
+				if(r.status == 200) {
+					$('#select-table').html(tmpl('tmpl-roundtables', r.data));
+				} else {
+					$.notify(r.data, 'error');
+				}
+			});			
+	    });
+	</script>
 </html>

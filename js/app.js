@@ -20,7 +20,7 @@ function ConfigApi(u)
 		,'URL_TABLESCORES' : u +'/tablescores'
 		,'URL_LEADERBOARD' : u +'/leaderboards'
 		,'URL_PAYMENTS' : u +'/payments'
-		,'URL_ROUNDS' : u +'/Rounds'
+		,'URL_ROUNDS' : u +'/rounds'
 		,'URL_GETCURRENCIES' : u +'/getcurrencies'
 		,'URL_LOGOUT' :	u +'/logout'
 	};

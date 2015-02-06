@@ -100,7 +100,6 @@
 				
 				$.post( ConfigApi().URL_AUTHENTICATE , d )
 				.done(function(r) {
-					alert(JSON.stringify(r));
 					if(r.status == 200) {
 						Storage.set('TOKEN', r.data.key);
 						location.href = 'home.html';
