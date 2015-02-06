@@ -97,21 +97,18 @@
 					//,"auth_token": API_DIGEST
 				};
 
-				try {
-					$.post( ConfigApi().URL_AUTHENTICATE , d )
-					.done(function(r) {
-						alert(JSON.stringify(r));
-						if(r.status == 200) {
-							Storage.set('TOKEN', r.data.key);
-							location.href = 'home.html';
-						} else {
-							$.notify(r.data, 'error');
-						}
-					});
-				} catch (e)
-				{
-					alert(JSON.stringify(e));
-				}
+				alert($.post);
+				$.post( ConfigApi().URL_AUTHENTICATE , d )
+				.done(function(r) {
+					alert(JSON.stringify(r));
+					if(r.status == 200) {
+						Storage.set('TOKEN', r.data.key);
+						location.href = 'home.html';
+					} else {
+						$.notify(r.data, 'error');
+					}
+				});
+
 			}
 			return false;
 			
