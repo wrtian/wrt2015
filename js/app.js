@@ -1,6 +1,6 @@
 API_DIGEST = 'none';
 Storage = $.localStorage;
-
+   
 function ConfigApi(u)
 {
 	if(u != undefined) {
@@ -25,13 +25,14 @@ function ConfigApi(u)
 		,'URL_LOGOUT' :	u +'/logout'
 	};
 };
-$.support.cors=true;
+
 $.ajaxSetup({
 	beforeSend: addHeaders,	
-	error: defaultError
+	error: defaultError,
+	complete: function() {$.unblockUI();}
 });
 
-function(jqXHR, exception) {
+function defaultError(jqXHR, exception) {
 
 	if (jqXHR.status === 0) {
 		alert('Not connect.\n Verify Network.');
@@ -56,10 +57,25 @@ function addHeaders(xhr) {
 //	xhr.setRequestHeader('Cookie', "PHPSESSID=rvrg3tii16gmpnr1e6sb2dvi13");
 	xhr.withCredentials = true;
 //	xhr.dataType ='jsonp';
+
+	$.blockUI({ 
+			css: { 
+				border: 'none', 
+				padding: '15px', 
+				backgroundColor: '#000', 
+				'-webkit-border-radius': '10px', 
+				'-moz-border-radius': '10px', 
+				opacity: .5, 
+				color: '#fff' 
+			} 
+		}
+	); 
 }
 
 $(function() {
 	API_DIGEST = Storage.get('TOKEN');
+	
+	$.support.cors=true;
 	
 	$.notify.defaults({globalPosition: 'top left', 'className':'info'});
 	if($('body').attr('id') != 'index')
