@@ -8,31 +8,35 @@
 		version         = "1.0.0">
 		
 	<name>WRT 2015</name>
-	
+
 	<description>WRT 2015 Manager</description>
-	
+
 	<content src="index.html" />
-	
+
 	<access origin="*" />
 
 	<!-- Define app icon for each platform. -->
-   <icon src="logo.png" />
-   <gap:splash src="logo.png" />
-   <gap:plugin name="org.apache.cordova.network-information" />
+	<icon src="logo.png" />
+	<gap:splash src="logo.png" />
+	<gap:plugin name="org.apache.cordova.network-information" />
 
-   <!-- Preference -->
-   <preference name="phonegap-version" value="3.6.3" />
-   <preference name="orienation" value="portrait" />
-   <preference name="fullscreen" value="true" />
-   <preference name="WebViewBounce" value="false" />
-   <preference name="DisallowOverscroll" value="true" />
-   <preference name="android-windowSoftInputMode" value="adjustResize" />
+	<!-- Preference -->
+	<preference name="phonegap-version" value="3.6.3" />
+	<preference name="orienation" value="portrait" />
+	<preference name="fullscreen" value="true" />
+	<preference name="WebViewBounce" value="false" />
+	<preference name="DisallowOverscroll" value="true" />
+	<preference name="android-windowSoftInputMode" value="adjustResize" />
 	<access origin="*"/>  
 	
+	<param name="android-package" value="org.apache.cordova.core.NetworkManager" />
 	<feature name="Camera">
 		<param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
 	</feature>
-	  
+	<feature name="NetworkStatus">
+		<param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+	</feature>
+	
 	<gap:config-file platform="android" target="AndroidManifest.xml" parent="/manifest">
 		<activity android:name="com.worldrummytournament.app" android:label="com.worldrummytournament.app" android:windowSoftInputMode="adjustResize"></activity>
 		<uses-permission android:name="android.permission.READ_PHONE_STATE" />
