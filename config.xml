@@ -10,8 +10,6 @@
 	<name>WRT 2015</name>
 	
 	<description>WRT 2015 Manager</description>
-
-	
 	
 	<content src="index.html" />
 	
@@ -36,11 +34,10 @@
 	</feature>
 	  
 	<gap:config-file platform="android" target="AndroidManifest.xml" parent="/manifest">
-		<activity
-		android:name="com.worldrummytournament.app"
-		android:label="com.worldrummytournament.app" 
-		android:windowSoftInputMode="adjustResize"
-		></activity>
-		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />		
+		<activity android:name="com.worldrummytournament.app" android:label="com.worldrummytournament.app" android:windowSoftInputMode="adjustResize"></activity>
+		<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+		<uses-permission android:name="android.permission.INTERNET" />
+		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+		<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />	
 	</gap:config-file>
 </widget>
