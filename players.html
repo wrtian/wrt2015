@@ -9,8 +9,10 @@
 
 		<link rel="stylesheet" href="css/ratchet.min.css">
 		<link rel="stylesheet" href="css/app.css">
+		<script src="js/debuggap.js"></script>
 		<script src="js/ratchet.min.js"></script>
 		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/jquery.blockUI.js"></script>
 		<script src="js/jquery.cookie.js"></script>
 		<script src="js/jquery.storageapi.min.js"></script>
 		<script src="js/jquery.serializeObject.min.js"></script>
@@ -56,8 +58,7 @@
 							<input type='hidden' name='id' value='{%=o.basic.id%}'/>
 							<input type='hidden' name='pic_data' id='pic_data'/>
 							<input type='text' name='full_name' placeholder='full name' value='{%=o.basic.full_name%}'/>
-							<textarea 		   name='address' placeholder='address'>{%=o.details.address%}</textarea>
-							<!--input type='text' name='city' placeholder='city' value='{%=o.details.city%}' /-->
+							<textarea name='address' placeholder='address'>{%=o.details.address%}</textarea>
 							<input type='text' name='state' placeholder='state' value='{%=o.details.state%}'/> 
 							<input type='text' name='pincode' placeholder='pincode' value='{%=o.details.pincode%}'/>
 							<input type='text' name='mobile' placeholder='mobile' value='{%=o.details.mobile%}'/>
@@ -89,8 +90,13 @@
 		</script>			
 		<script type="text/x-tmpl" id="tmpl-game">
 			<ul class="table-view">
+			{% for (var i=0; i<o.games.length; i++) { %}
+				<li class="table-view-cell">
+					<div class='media-body'>{%=o.games[i].table%}<br/><em>{%=o.games[i].round%}</em>
+					</div>
+				</li>
+			{% } %}				
 				<li class="table-view-cell media">
-					<!--img class="media-object pull-left" style="width:15%" src="{% if (o.details.pic_url) %}{%=o.details.pic_url%}" /-->
 					<div class="media-body">
 						<!--button id="playeredit" type="button" class="btn btn-primary pull-right">EDIT DETAILS</button-->
 						{%=o.basic.full_name%}
@@ -119,13 +125,13 @@
 		<div class="content content-padded">
 			<div class="segmented-control">
 			  <a class="control-item active" href="#playerinfo">
-			    Basic Info
+			    <h4>Basic Info</h4>
 			  </a>
 			  <a class="control-item" href="#game">
-			    Game
+			    <h4>Game</h4>
 			  </a>
 			  <a class="control-item" href="#transaction">
-			    Transaction
+			    <h4>Transaction</h4>
 			  </a>
 			</div>
 			<div class="card">
@@ -201,7 +207,7 @@
 				if(r.status == 200) {
 					$("#playerinfo").html(tmpl('tmpl-playerinfo', r.data));
 					$("#editplayer div.content").html(tmpl('tmpl-playeredit', r.data));
-					
+
 					$("#game").html(tmpl('tmpl-game', r.data));
 					$("#transaction").html(tmpl('tmpl-transaction', r.data));
 					

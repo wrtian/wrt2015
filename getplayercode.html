@@ -9,6 +9,7 @@
 
 		<link rel="stylesheet" href="css/ratchet.min.css">
 		<link rel="stylesheet" href="css/app.css">
+		<script src="js/debuggap.js"></script>
 		<script src="js/ratchet.min.js"></script>
 		<script src="js/jquery-1.11.1.min.js"></script>
 		<script src="js/jquery.blockUI.js"></script>		
@@ -22,15 +23,19 @@
 		<script src="js/html5-qrcode.js"></script>
 		<script src="js/app.js"></script>
 		<script type="text/x-tmpl" id="tmpl-playerlist">
-		  <li class="table-view-cell">
-			<a class="navigate-right" data-ignore="push" href="players.html#{%=o.card_no%}">
-			  <img class="media-object pull-left img-responsive" style="width:15%" src="{%=o.pic_url%}">
-			  <div class="media-body">
-				{%=o.full_name%}
-				<p>{%=o.card_no%}</p>
-			  </div>
-			</a>
-		   </li>
+			<ul class="table-view">
+			{% for (var i=0; i<o.players.length; i++) { %}
+				<li class="table-view-cell">
+					<a class="navigate-right" data-ignore="push" href="players.html#{%=o.players[i].card_no%}">
+						<img class="media-object pull-left img-responsive" style="width:15%" src="{%=o.players[i].pic_url%}">
+						<div class="media-body">
+							{%=o.players[i].full_name%}
+							<p>{%=o.players[i].card_no%}</p>
+						</div>
+					</a>
+				</li>
+			{% } %}	
+			</ul>
 		</script>		
 	</head>
 	<body id="getplayer">
@@ -46,10 +51,10 @@
 			</div>
 			<div class="card">
 				<div id="byscan" class="control-content active">
-					<div class="table-view-cell">
-						<div id="reader" style="width:100%;height:75%;min-height:300px;">
-						</div>
-						<button type="button" class="start btn-primary">SCAN CARD</button>
+					<div id="reader">
+					</div>
+					<div>
+					<button type="button" class="start btn-primary btn-block">START SCAN</button>
 					</div>
 				</div>
 				<div id="bycode" class="control-content">
@@ -57,72 +62,50 @@
 						<input type='text' id='playercode' style="height: 25px;width: 80%;top: 30%;" placeholder='Type a card number'/>
 					</div>
 					<div>
-						<button type="button" class="start submit btn btn-primary">FIND</button>
+						<button type="button" class="start submit btn btn-block btn-primary">FIND</button>
 					</div>
 				</div>
 				<div id="byname" class="control-content">
 					<div class="table-view-cell">
 						<input type='text' id='anything' style="height: 25px;width: 80%;top: 30%;" placeholder='Type any player information'/>
 					</div>
-					<button type="button" class="start submit btn btn-primary">FIND</button>
+					<button type="button" class="start submit btn btn-block btn-primary">FIND</button>
 				</div>
 			</div>
 		</div>
 			
 		<!-- /.content -->
 		<div id="playerlist" class="modal">
-		  <header class="bar bar-nav">
-		    <a class="icon icon-close pull-right" href="#playerlist"></a>
-		    <h1 class="title">Search Results</h1>
-		  </header>
-		  <div class="content content-padded">
-			  <ul id="searchresults" class="table-view">
-			  </ul>
-		  </div>
-	    </div>		
+			<header class="bar bar-nav">
+				<a class="icon icon-close pull-right" href="#playerlist"></a>
+				<h1 class="title">Search Results</h1>
+			</header>
+			<div id="searchresults" class="content content-padded">
+				<em>no results</em>
+			</div>
+		</div>
 	</body>
 	<script>
 		$(function() {
-			$("#saverecord").on("touchstart",function(){
-				d = {player:{
-					id: $("#playercode").val(), 
-					active: $("#activate").val()
-				}, player_details:{
-					hotel_card:$("#hotel_card").val(), 
-					room_no: $("#room_no").val()
-				}};
-				
-				$.post( ConfigApi().URL_PLAYERUPDATE , d )
-					.done(function(r) {
-						if(r.status == 200) {
-							$.notify("Player activated successfully", "success");
-						} else if(r.status == 500) {
-							$.notify('server error', 'error');
-						} else {
-							$.notify('player information not found', 'warning');
-						}
-						
-						$("#editplayer").removeClass('active');
-					});
-			});
-					
 			$("#bycode button.start").on("touchstart",function(){
 				txt = $("#playercode").val();
 				if(txt == '') {
 					$.notify("Enter part of code to search", "error");
 					return;
 				}
-				$("#searchresults").html("<li>please wait...</li>");
+				$("#searchresults").html("<em>please wait...</em>");
 				$("#playerlist").addClass("active");
 				$.post( ConfigApi().URL_PLAYERFIND , {search_type: 'code', search: txt } )
 				.done(function(r) {
-					$("#searchresults").html("");
 					if(r.status == 200) {
-						$.each(r.data, function(i,d) {
-							$("#searchresults").append(tmpl('tmpl-playerlist', d));
-						});
+						if(r.data.players.length>0)
+						{
+							$("#searchresults").html(tmpl('tmpl-playerlist', r.data));
+						} else {
+							$("#searchresults").html("<em>no results</em>");
+						}
 					} else{
-						$("#searchresults").html(r.data);
+						$.notify(r.data, 'error');
 					}
 				});
 			});
@@ -133,17 +116,19 @@
 					$.notify("Enter a name to search", "error");
 					return;
 				}
-				$("#searchresults").html("<li>please wait...</li>");
+				$("#searchresults").html("<em>please wait...</em>");
 				$("#playerlist").addClass("active");
 				$.post( ConfigApi().URL_PLAYERFIND , {search_type: 'any', search: txt } )
 				.done(function(r) {
-					$("#searchresults").html("");
 					if(r.status == 200) {
-						$.each(r.data, function(i,d) {
-							$("#searchresults").append(tmpl('tmpl-playerlist', d));
-						});
+						if(r.data.players.length>0)
+						{
+							$("#searchresults").html(tmpl('tmpl-playerlist', r.data));
+						} else {
+							$("#searchresults").html("<em>no results</em>");
+						}
 					} else{
-						$("#searchresults").html(r.data);
+						$.notify(r.data, 'error');
 					}
 				});
 			});
@@ -165,21 +150,22 @@
 					}
 				});
 				*/
-
+				$(this).parent().html('<em>point camera at the card</em>');
 				$('#reader').html5_qrcode(function(data){
 						// do something when code is read
-						//this.stop();
-						$("#searchresults").html("<li>please wait...</li>");
+						$("#searchresults").html("<em>please wait...</em>");
 						$("#playerlist").addClass("active");
 						$.post( ConfigApi().URL_PLAYERFIND , {search_type: 'code', search: txt } )
 						.done(function(r) {
-							$("#searchresults").html("");
 							if(r.status == 200) {
-								$.each(r.data, function(i,d) {
-									$("#searchresults").append(tmpl('tmpl-playerlist', d));
-								});
+								if(r.data.players.length>0)
+								{
+									$("#searchresults").html(tmpl('tmpl-playerlist', r.data));
+								} else {
+									$("#searchresults").html("<em>no results</em>");
+								}
 							} else{
-								$("#searchresults").html(r.data);
+								$.notify(r.data, 'error');
 							}
 						});
 					},

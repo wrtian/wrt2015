@@ -2,102 +2,110 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>WRT 2015</title>
+		<title>WRT 2015 - Leaderboards</title>
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link rel="stylesheet" href="css/ratchet.min.css">
 		<link rel="stylesheet" href="css/app.css">
-		<link rel="stylesheet" href="css/jquery.dataTables.css">
+		<script src="js/debuggap.js"></script>
 		<script src="js/ratchet.min.js"></script>
 		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/jquery.blockUI.js"></script>
 		<script src="js/jquery.cookie.js"></script>
 		<script src="js/jquery.storageapi.min.js"></script>
-		<script src="js/jquery.serialize-object.min.js"></script>
+		<script src="js/jquery.serializeObject.min.js"></script>
 		<script src="js/tmpl.min.js"></script>
 		<script src="js/notify.min.js"></script>
 		<script src="js/notify.bootstrap.js"></script>
 		<script src="js/html5-qrcode.min.js"></script>
 		<script src="js/html5-qrcode.js"></script>
 		<script src="js/app.js"></script>
-		<script src="js/jquery.js"></script>
-		<script src="js/jquery.dataTables.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function(){
-			   // $('#myTable').DataTable();
-
-			    $('table').dataTable( {
-				  paginate: false,
-				  //scrollY: 300
-				  filter: false,
-				  info:false
-				} );
-			})
+			
+		<script type="text/x-tmpl" id="tmpl-rounds">
+			{% for (var i=0; i<o.rounds.length; i++) { %}
+			<li class="table-view-cell"><a href="#" class='roundlink' data-id="{%=i%}">{%=o.rounds[i].name%}</a></li>
+			{% } %}			
+		</script>
+		<script type="text/x-tmpl" id="tmpl-results-old">
+			{% for (var i=0; i<o.rounds.length; i++) { %}
+			<div id="round-{%=o.rounds[i].id%}" class="card">
+				<ul class="table-view">
+					<li class='table-view-divider'><h3>{%=o.rounds[i].name%}</h3></li>
+					{% for (var j=0; j<o.rounds[i].winners.length; j++) { %}
+					<li class="table-view-cell media">
+						<div class="media-body">
+							{%=o.rounds[i].winners[j].full_name%}<br/>
+							{%=o.rounds[i].winners[j].card%}
+							<span class="media-object pull-right">{%=o.rounds[i].winners[j].rank%}</span>
+						</div>
+					</li>
+					{% } %}
+				</ul>
+			</div>			
+			{% } %}
+		</script>
+		<script type="text/x-tmpl" id="tmpl-results">
+			<div class="card">
+				<ul class="table-view">
+					<li class='table-view-divider'><h3>{%=o.name%}</h3></li>
+					{% for (var j=0; j<o.winners.length; j++) { %}
+					<li class="table-view-cell media">
+						<div class="media-body">
+							<span class='badge badge-positive'>{%=o.winners[j].rank%}</span> {%=o.winners[j].full_name%}
+							<span class="media-object pull-right">{%=o.winners[j].card%}</span>
+						</div>
+					</li>
+					{% } %}
+				</ul>
+			</div>
 		</script>
 	</head>
 	<body id="leaderboard">
 		<header class="bar bar-nav">
 		  <a  href="home.html" class="icon icon-home pull-left" data-ignore="push"></a>
-		  <a href="#myPopover">
+		  <a href="#roundslist">
 		    <h1 class="title">
 		      LEADERBOARD
 		      <span class="icon icon-caret"></span>
 		    </h1>
 		  </a>
 		</header>
-		<div id="myPopover" class="popover">
-		  <header class="bar bar-nav">
-		    <h1 class="title">Select Round</h1>
-		  </header>
-		  <ul class="table-view">
-		    <li class="table-view-cell">Round 6</li>
-		    <li class="table-view-cell">Round 5</li>
-		    <li class="table-view-cell">Round 4</li>
-		    <li class="table-view-cell">Round 3</li>
-		    <li class="table-view-cell">Round 2</li>
-		    <li class="table-view-cell">Round 1</li>
-		  </ul>
+		<div id="roundslist" class="popover">
+			<header class="bar bar-nav">
+				<h1 class="title">Select Round</h1>
+			</header>
+			<ul class="table-view"></ul>
 		</div>
-		<div class="content content-padded">
-			<div class="card">
-				<table id="myTable" class="display" cellspacing="0" width="100%">
-			    <thead>
-			        <tr>
-			            <th>Rank No.</th>
-			            <th>Player Name</th>
-			            <th>Card No.</th>
-			        </tr>
-			    </thead>
-			    <tbody>
-			        <tr>
-			            <td>Rank 1</td>
-			            <td>Player 1</td>
-			            <td>854632</td>
-			        </tr>
-			        <tr>
-			            <td>Rank 2</td>
-			            <td>Player 2</td>
-			            <td>854632</td>
-			        </tr>
-			        <tr>
-			            <td>Rank 3</td>
-			            <td>Player 3</td>
-			            <td>854632</td>
-			        </tr>
-			        <tr>
-			            <td>Rank 4</td>
-			            <td>Player 4</td>
-			            <td>854632</td>
-			        </tr>
-			        <tr>
-			            <td>Rank 5</td>
-			            <td>Player 5</td>
-			            <td>854632</td>
-			        </tr>
-			    </tbody>
-			</table>
-			</div>
+		<div id="results" class="content content-padded">
+			<em>select a round</em>
 		</div>
 	</body>
+	<script type="text/javascript">
+		data = [];
+		$(function() {
+			$.post( ConfigApi().URL_LEADERBOARD)
+			.done(function(r) {
+				if(r.status == 200) {
+					data = r.data;
+					$('#roundslist ul').html(tmpl('tmpl-rounds', data));
+
+					$('.roundlink').on("touchstart", selectRound);
+					
+				} else {
+					$.notify(r.data, 'error');
+				}
+			});			
+	    });
+		
+		function selectRound(e)
+		{
+			e.preventDefault();
+			id = $(this).data('id');
+			$('#results').html(tmpl('tmpl-results', data.rounds[id]));
+		}
+		
+	</script>
+	
 </html>

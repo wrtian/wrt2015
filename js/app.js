@@ -57,19 +57,24 @@ function addHeaders(xhr) {
 //	xhr.setRequestHeader('Cookie', "PHPSESSID=rvrg3tii16gmpnr1e6sb2dvi13");
 	xhr.withCredentials = true;
 //	xhr.dataType ='jsonp';
+	
+	blocker(); 
+}
 
+function blocker()
+{
 	$.blockUI({ 
-			css: { 
-				border: 'none', 
-				padding: '15px', 
-				backgroundColor: '#000', 
-				'-webkit-border-radius': '10px', 
-				'-moz-border-radius': '10px', 
-				opacity: .5, 
-				color: '#fff' 
-			} 
-		}
-	); 
+				css: { 
+					border: 'none', 
+					padding: '15px', 
+					backgroundColor: '#000', 
+					'-webkit-border-radius': '10px', 
+					'-moz-border-radius': '10px', 
+					opacity: .5, 
+					color: '#fff' 
+				} 
+			}
+		); 
 }
 
 $(function() {
@@ -80,6 +85,7 @@ $(function() {
 	$.notify.defaults({globalPosition: 'top left', 'className':'info'});
 	if($('body').attr('id') != 'index')
 	{
+		blocker(); 
 		$.get( ConfigApi().URL_PULSE).done(
 			function(r) {
 				if(r.status != 200)
