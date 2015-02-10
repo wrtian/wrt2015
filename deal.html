@@ -50,8 +50,8 @@
 										<option value='4'>WRNG</option>
 									</select>
 								</td>
-								<td><input type="text" class='pts' name="scores[points][{%=i%}]" value="{%=o.deals[j][i].points%}" data-id='{%=i%}' data-pretotal="{%=o.deals[j][i].pre_total%}" /></td>
-								<td class='point-total'>{%= o.deals[j][i].pre_total + o.deals[j][i].points %}</td>
+								<td><input type="number" class='pts' name="score[points][{%=i%}]" value="{%=o.deals[j][i].points%}" data-id='{%=i%}' data-pretotal="{%=o.deals[j][i].pre_total%}" /></td>
+								<td class='point-total_{%=i%}'>{%= o.deals[j][i].pre_total + o.deals[j][i].points %}</td>
 								<td><input type="radio" name="score[is_dealer]" value="{%=o.deals[j][i].is_dealer%}"></td>
 								<td><input type="radio" name="score[is_winner]" value="{%=o.deals[j][i].is_winner%}"></td>
 							</tr>
@@ -105,19 +105,20 @@
 						var i = $(this).val();
 						if(i>0) {
 							id = $(this).data('id');
-							$(this).closest('form').find('pts').val(def_vals[i]).change();
+							$(this).closest('form').find('[name="score[points]['+id+']"]').val(def_vals[i]).prop('disable', true).change();
+						} else {
+							$(this).closest('form').find('[name="score[points]['+id+']"]').prop('disable', false);
 						}
 					});
 					
-					$('input .pts').on('change', function() {
+					$(document).on( 'change', '.pts', function() {
 						id = $(this).data('id');
-						alert(id);
 						me = parseInt($(this).val());
 						ni = parseInt($(this).data('pretotal'));
 
 						//$('#score_total_' + id).val(me + ni );
 						//$('#total-' + id).html(me + ni );
-						$(this).closest('form').find('point-total').html(me + ni);
+						$(this).closest('form').find('.point-total_' + id).html(me + ni);
 					});
 				} else {
 					$.notify(r.data, 'error');
