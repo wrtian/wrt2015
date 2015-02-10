@@ -16,6 +16,7 @@ function ConfigApi(u)
 		,'URL_PLAYERINFO' : u +'/playerinfo'
 		,'URL_PLAYERFIND' : u +'/playersearch'
 		,'URL_PLAYERUPDATE' : u +'/playerupdate'
+		,'URL_TABLESEATING' : u +'/tableseating'
 		,'URL_TABLESTATUS' : u +'/tablestatus'
 		,'URL_TABLESCORES' : u +'/tablescores'
 		,'URL_LEADERBOARD' : u +'/leaderboards'

@@ -76,15 +76,16 @@
 		</script>		
 		<script type="text/x-tmpl" id="tmpl-transaction">
 			<ul class="table-view">
+			{% for (var i=0; i<o.transactions.length; i++) { %}
 				<li class="table-view-cell media">
 					<div class="media-body">
-						{%=o.transactions.narration%}
-						<p class='pull-right'>{%=o.transactions.transaction_value%}<br/>
-							{%=o.transactions.created_at%}
+						{%=o.transactions[i].narration%}
+						<p class='pull-right'>{%=o.transactions[i].transaction_value%}<br/>
+							{%=o.transactions[i].created_at%}
 						</p>
-
 					</div>
 				</li>
+			{% } %}					
 			</ul>
 			<a href="#new_transaction" class="btn btn-primary btn-block">New Transaction</a>
 		</script>			
@@ -92,25 +93,14 @@
 			<ul class="table-view">
 			{% for (var i=0; i<o.games.length; i++) { %}
 				<li class="table-view-cell">
-					<div class='media-body'>{%=o.games[i].table%}<br/><em>{%=o.games[i].round%}</em>
-					</div>
+					<div class="media-body">
+						<p>{%=o.games[i].table%} - {%=o.games[i].round%}
+							<br/>{%=o.games[i].status%}
+							<span class='pull-right badge badge-{% if (o.games[i].winner==0) { %}positive'>winner{% } else { %}negative'>busted{% } %}</span>
+						</p>
+					</div>				
 				</li>
 			{% } %}				
-				<li class="table-view-cell media">
-					<div class="media-body">
-						<!--button id="playeredit" type="button" class="btn btn-primary pull-right">EDIT DETAILS</button-->
-						{%=o.basic.full_name%}
-						<p>{%=o.games%}<br/>
-						{%=o.games%}<br/>
-						{%=o.games%}, {%=o.games.pincode%}<br/>
-						{%=o.games%}<br/>
-						{%=o.games%}<br/>
-						{%=o.games%}<br/>
-						{%=o.games%}<br/>
-						{%=o.games%}<br/>
-						{%=o.games%}</p>
-					</div>
-				</li>
 			</ul>
 		</script>
 
@@ -135,11 +125,9 @@
 			  </a>
 			</div>
 			<div class="card">
-			  <div id="playerinfo" class="control-content active"></div>
-			  <div id="game" class="control-content"></div>
-			  <div id="transaction" class="control-content content-padded">
-			  	
-			  </div>
+			  <div id="playerinfo" class="control-content active"><em>no details</em></div>
+			  <div id="game" class="control-content content-padded"><em>no game information</em></div>
+			  <div id="transaction" class="control-content content-padded"><em>no transactions</em></div>
 			</div>
 		</div>
 	    <div id="editplayer" class="modal">
@@ -207,7 +195,6 @@
 				if(r.status == 200) {
 					$("#playerinfo").html(tmpl('tmpl-playerinfo', r.data));
 					$("#editplayer div.content").html(tmpl('tmpl-playeredit', r.data));
-
 					$("#game").html(tmpl('tmpl-game', r.data));
 					$("#transaction").html(tmpl('tmpl-transaction', r.data));
 					

@@ -45,29 +45,29 @@
 		</header>
 		<div class="content content-padded">
 			<div class="segmented-control">
-				<a class="control-item active" href="#byscan">QRCODE</a>
-				<a class="control-item" href="#bycode">BY CODE</a>
-				<a class="control-item" href="#byname">BY NAME</a>
+				<a class="control-item active" href="#byscan"><h4>QR-CODE</h4></a>
+				<a class="control-item" href="#bycode"><h4>BY CODE</h4></a>
+				<a class="control-item" href="#byname"><h4>BY NAME</h4></a>
 			</div>
 			<div class="card">
 				<div id="byscan" class="control-content active">
 					<div id="reader">
 					</div>
 					<div>
-					<button type="button" class="start btn-primary btn-block">START SCAN</button>
+						<button type="button" class="start btn-primary btn-block">START SCAN</button>
 					</div>
 				</div>
 				<div id="bycode" class="control-content">
-					<div class="table-view-cell">
-						<input type='text' id='playercode' style="height: 25px;width: 80%;top: 30%;" placeholder='Type a card number'/>
+					<div class="table-view-cell" style='padding:15px;' >
+						<input type='text' id='playercode' class='form-control input-large' placeholder='Type part of a card number'/>
 					</div>
-					<div>
+					<div style='padding:15px;'>
 						<button type="button" class="start submit btn btn-block btn-primary">FIND</button>
 					</div>
 				</div>
 				<div id="byname" class="control-content">
-					<div class="table-view-cell">
-						<input type='text' id='anything' style="height: 25px;width: 80%;top: 30%;" placeholder='Type any player information'/>
+					<div class="table-view-cell" style='padding:15px;' >
+						<input type='text' id='anything' placeholder='Type any player information'/>
 					</div>
 					<button type="button" class="start submit btn btn-block btn-primary">FIND</button>
 				</div>

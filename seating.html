@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>WRT 2015 - Seatingyy</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/ratchet.min.css">
+		<link rel="stylesheet" href="css/app.css">
+		<script src="js/debuggap.js"></script>
+		<script src="js/ratchet.min.js"></script>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/jquery.blockUI.js"></script>
+		<script src="js/jquery.cookie.js"></script>
+		<script src="js/jquery.storageapi.min.js"></script>
+		<script src="js/jquery.serialize-object.min.js"></script>
+		<script src="js/tmpl.min.js"></script>
+		<script src="js/notify.min.js"></script>
+		<script src="js/notify.bootstrap.js"></script>
+		<script src='js/jquery-sortable.js'></script>		
+		<script src="js/touch-dnd.js"></script>
+		<script src="js/app.js"></script>
+		<script type="text/x-tmpl" id="tmpl-seating">
+			<p class='badge'>Drag the player picture to re-arrange</p>
+			<div class="card">
+				<ol class='seating table-view' data-id='{%=o.table.id%}'>
+				{% for (var i=0; i<o.players.length; i++) { %}
+					<li class="table-view-cell media" data-id='{%=o.players[i].id%}'>
+						<img class="media-object pull-left" style="width:50px" src="{%=o.players[i].pic_url%}">
+						<div class="media-body">
+							{%=o.players[i].full_name%}
+							<p>{%=o.players[i].card_no%}</p>
+						</div>
+					</li>					
+				{% } %}			
+				</ol>
+			</div>
+			<button class="btn btn-positive btn-block" id="start">START GAME</button>
+		</script>
+		<style>
+		.draggable, .droppable {
+		  border: 1px dashed #000;
+		  width: 50px;
+		  height: 50px;
+		  background-color: #fff;
+		  display: inline-block;
+		  box-sizing: border-box;
+		  vertical-align: top;
+		}		
+		</style>
+	</head>
+	<body id="playerposition">
+		<header class="bar bar-nav">
+		  <a  href="home.html" class="pull-left"  data-ignore="push"><img src="img/left224.png" /></a>
+		    <h1 class="title">
+		      Sitting Position
+		    </h1>
+		  </a>
+		</header>
+		<div class="content content-padded" id='seating'>
+			<p style='margin-left:35%' class='badge'>Drag the player name to re-arrange</p>
+			<div class="card">
+				<ol class='seating table-view'>
+				
+				</ol>
+			</div>
+			<button class="btn btn-positive btn-block" id="start">START GAME</button>
+		</div>
+		<!-- /.content -->
+	</body>
+
+	<script>
+		var id = 0;
+		$(function() {
+			id = $(location).attr('hash').substr(1);
+			if(id =='') {
+				alert("Table not found", "error");
+				location.href= 'scores.html';
+				return;
+			}
+
+			$.get( ConfigApi().URL_TABLESEATING, {id: id})
+			.done(function(r) {
+				$('#seating').html('no players');
+				if(r.status == 200) {
+					$('#seating').html(tmpl('tmpl-seating', r.data));
+					$("ol.seating").sortable({draggable:'.media', handle:'.media-object'});
+					
+					$('#start').on('touchstart', submitdata);
+				} else {
+					$.notify(r.data, 'error');
+				}
+			});	
+			
+			function submitdata()
+			{
+				o = [];
+				$('.seating li').each(function(i, d)
+				{
+					o[i] = $(d).data('id');
+				});
+				$.post( ConfigApi().URL_TABLESEATING, {id: id, table: {players:o}})
+				.done(function(r) {
+					if(r.status == 200) {
+						alert(r.data);
+						location.href='scores.html';
+						
+					}
+				});
+			}
+		});
+	</script>	
+</html>
